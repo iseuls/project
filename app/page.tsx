@@ -106,91 +106,156 @@ export default function Home() {
     setResponse(null);
   };
 
+  // 파티클 생성 함수
+  const createParticles = () => {
+    const particles = [];
+    for (let i = 0; i < 15; i++) {
+      particles.push(
+        <div
+          key={i}
+          className="particle"
+          style={{
+            left: `${Math.random() * 100}%`,
+            width: `${Math.random() * 6 + 2}px`,
+            height: `${Math.random() * 6 + 2}px`,
+            animationDelay: `${Math.random() * 15}s`,
+            animationDuration: `${15 + Math.random() * 10}s`
+          }}
+        />
+      );
+    }
+    return particles;
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 p-4">
-      <div className="max-w-4xl mx-auto py-8">
-        {/* 헤더 */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-            💝 마음이 쉬는 곳
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            당신의 이야기를 들려주세요. 따뜻한 칭찬과 위로, 그리고 도움이 되는 조언을 드릴게요.
-          </p>
-        </div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* 배경 파티클 시스템 */}
+      <div className="particles">
+        {createParticles()}
+      </div>
+      
+      {/* 메인 컨테이너 */}
+      <div className="relative z-10 min-h-screen p-4">
+        <div className="max-w-5xl mx-auto py-12">
+          {/* 3D 플로팅 헤더 */}
+          <div className="text-center mb-16 floating">
+            <div className="glass card-3d p-8 mb-8 glow">
+              <h1 className="text-5xl md:text-7xl font-bold text-gradient-rainbow mb-6">
+                💝 마음이 쉬는 곳
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+                당신의 이야기를 들려주세요 ✨<br/>
+                <span className="text-lg opacity-80">따뜻한 칭찬과 위로, 그리고 도움이 되는 조언을 드릴게요</span>
+              </p>
+            </div>
+          </div>
 
         {!response ? (
-          /* 이야기 입력 폼 */
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <label className="block text-lg font-semibold text-gray-700 mb-4">
-                오늘 어떤 일이 있으셨나요? 편하게 이야기해 주세요 ✨
-              </label>
-              <textarea
-                value={story}
-                onChange={(e) => setStory(e.target.value)}
-                placeholder="여기에 당신의 이야기를 자유롭게 적어주세요. 어떤 감정이든, 어떤 상황이든 괜찮아요..."
-                className="w-full h-40 p-4 border-2 border-purple-100 rounded-xl resize-none focus:outline-none focus:border-purple-300 focus:ring-2 focus:ring-purple-100 text-gray-700 leading-relaxed"
-                disabled={loading}
-              />
-              <div className="mt-6 text-center">
-                <button
-                  type="submit"
-                  disabled={!story.trim() || loading}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                >
-                  {loading ? '마음을 읽고 있어요... 💭' : '이야기 들려주기 💌'}
-                </button>
+          /* 3D 이야기 입력 폼 */
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="card-3d glass p-10 tilt-effect">
+              <div className="relative z-10">
+                <label className="block text-2xl font-bold text-white mb-6 text-center">
+                  <span className="text-gradient">오늘 어떤 일이 있으셨나요?</span> 
+                  <br/>
+                  <span className="text-lg font-normal text-white/80 mt-2 block">편하게 이야기해 주세요 ✨</span>
+                </label>
+                <div className="relative">
+                  <textarea
+                    value={story}
+                    onChange={(e) => setStory(e.target.value)}
+                    placeholder="여기에 당신의 이야기를 자유롭게 적어주세요. 어떤 감정이든, 어떤 상황이든 괜찮아요..."
+                    className="w-full h-48 p-6 glass border-2 border-white/20 rounded-2xl resize-none focus:outline-none focus:border-white/40 focus:ring-2 focus:ring-white/10 text-white placeholder-white/60 leading-relaxed text-lg backdrop-blur-md"
+                    disabled={loading}
+                  />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
+                </div>
+                <div className="mt-8 text-center">
+                  <button
+                    type="submit"
+                    disabled={!story.trim() || loading}
+                    className="btn-3d touch-effect glow px-12 py-4 text-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    {loading ? (
+                      <span className="flex items-center gap-3">
+                        <div className="spinner-3d w-6 h-6"></div>
+                        마음을 읽고 있어요... 💭
+                      </span>
+                    ) : (
+                      '이야기 들려주기 💌'
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </form>
         ) : loading ? (
-          /* 로딩 상태 */
-          <div className="text-center py-16">
-            <div className="inline-block animate-pulse">
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-full p-4 shadow-lg">
-                <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-2xl">💭</span>
-                </div>
+          /* 3D 로딩 상태 */
+          <div className="text-center py-20">
+            <div className="card-3d glass p-12 mx-auto max-w-md floating">
+              <div className="spinner-3d mx-auto mb-8"></div>
+              <h3 className="text-2xl font-bold text-white mb-4 text-gradient">
+                마음을 읽고 있어요...
+              </h3>
+              <p className="text-white/80 text-lg leading-relaxed">
+                당신의 이야기를 소중히 들으며<br/>
+                따뜻한 답변을 준비하고 있습니다 ✨
+              </p>
+              <div className="mt-6 flex justify-center gap-2">
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '0s'}}></div>
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-pulse" style={{animationDelay: '0.6s'}}></div>
               </div>
             </div>
-            <h3 className="text-xl font-semibold text-gray-700 mt-6 mb-2">
-              마음을 읽고 있어요...
-            </h3>
-            <p className="text-gray-500">당신의 이야기를 소중히 들으며 답변을 준비하고 있습니다</p>
           </div>
         ) : (
-          /* AI 응답 표시 */
-          <div className="space-y-6">
-            {/* 칭찬 */}
-            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl shadow-lg p-8 border-l-4 border-yellow-400 fade-in-up" style={{animationDelay: '0.1s'}}>
-              <h3 className="text-xl font-bold text-yellow-700 mb-4 flex items-center">
-                🎉 당신이 정말 잘하고 있는 것들
-              </h3>
-              <p className="text-gray-700 leading-relaxed">{response.praise}</p>
+          /* 3D AI 응답 카드들 */
+          <div className="space-y-8">
+            {/* 칭찬 카드 */}
+            <div className="card-3d glass p-8 stagger-fade-in glow relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 rounded-2xl"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-4xl floating">🎉</span>
+                  <span className="text-gradient">당신이 정말 잘하고 있는 것들</span>
+                </h3>
+                <p className="text-white/90 leading-relaxed text-lg font-light">{response.praise}</p>
+              </div>
             </div>
 
-            {/* 위로 */}
-            <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl shadow-lg p-8 border-l-4 border-pink-400 fade-in-up" style={{animationDelay: '0.3s'}}>
-              <h3 className="text-xl font-bold text-pink-700 mb-4 flex items-center">
-                💝 따뜻한 위로의 말
-              </h3>
-              <p className="text-gray-700 leading-relaxed">{response.comfort}</p>
+            {/* 위로 카드 */}
+            <div className="card-3d glass p-8 stagger-fade-in glow relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-rose-400/20 rounded-2xl"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-4xl floating" style={{animationDelay: '1s'}}>💝</span>
+                  <span className="text-gradient">따뜻한 위로의 말</span>
+                </h3>
+                <p className="text-white/90 leading-relaxed text-lg font-light">{response.comfort}</p>
+              </div>
             </div>
 
-            {/* 해결책 */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-lg p-8 border-l-4 border-blue-400 fade-in-up" style={{animationDelay: '0.5s'}}>
-              <h3 className="text-xl font-bold text-blue-700 mb-4 flex items-center">
-                💡 도움이 될 만한 조언
-              </h3>
-              <p className="text-gray-700 leading-relaxed">{response.solution}</p>
+            {/* 해결책 카드 */}
+            <div className="card-3d glass p-8 stagger-fade-in glow relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-2xl"></div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                  <span className="text-4xl floating" style={{animationDelay: '2s'}}>💡</span>
+                  <span className="text-gradient">도움이 될 만한 조언</span>
+                </h3>
+                <p className="text-white/90 leading-relaxed text-lg font-light">{response.solution}</p>
+              </div>
             </div>
 
             {/* 새로운 이야기 버튼 */}
-            <div className="text-center pt-6 fade-in-up" style={{animationDelay: '0.7s'}}>
+            <div className="text-center pt-8 stagger-fade-in">
               <button
                 onClick={resetForm}
-                className="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                className="btn-3d touch-effect px-10 py-4 text-lg font-bold bg-gradient-to-r from-slate-600 to-slate-700"
+                style={{
+                  background: 'linear-gradient(135deg, #64748b 0%, #475569 100%)',
+                  boxShadow: '0 10px 20px rgba(100, 116, 139, 0.4), 0 6px 6px rgba(100, 116, 139, 0.1), inset 0 -2px 5px 1px rgba(100, 116, 139, 0.6), inset 0 -1px 1px 3px rgba(100, 116, 139, 0.8), inset 0 2px 1px rgba(255, 255, 255, 0.3)'
+                }}
               >
                 새로운 이야기 나누기 🔄
               </button>
@@ -198,11 +263,15 @@ export default function Home() {
           </div>
         )}
 
-        {/* 푸터 */}
-        <div className="text-center mt-16 text-gray-500">
-          <p className="text-sm">
-            💝 모든 이야기는 소중하고, 당신은 혼자가 아닙니다. 전문적인 도움이 필요하다면 주저하지 마세요.
-          </p>
+          {/* 3D 푸터 */}
+          <div className="text-center mt-20">
+            <div className="glass card-3d p-6 max-w-2xl mx-auto">
+              <p className="text-white/80 text-lg leading-relaxed">
+                💝 <span className="text-gradient font-semibold">모든 이야기는 소중하고, 당신은 혼자가 아닙니다.</span><br/>
+                <span className="text-sm text-white/60 mt-2 block">전문적인 도움이 필요하다면 주저하지 마세요.</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
