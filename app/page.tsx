@@ -9,6 +9,10 @@ interface AIResponse {
   solution: string;
 }
 
+// 타입 정의
+type EmotionType = 'sad' | 'angry' | 'anxious' | 'tired' | 'neutral';
+type SituationType = 'work' | 'relationship' | 'study' | 'general';
+
 // 간단한 AI 응답 생성 로직
 function generateAIResponse(userStory: string): AIResponse {
   // 감정 키워드 분석
@@ -25,14 +29,14 @@ function generateAIResponse(userStory: string): AIResponse {
   const text = userStory.toLowerCase();
   
   // 감정 분석
-  let emotion = 'neutral';
+  let emotion: EmotionType = 'neutral';
   if (sadWords.some(word => text.includes(word))) emotion = 'sad';
   else if (angryWords.some(word => text.includes(word))) emotion = 'angry';
   else if (anxiousWords.some(word => text.includes(word))) emotion = 'anxious';
   else if (tiredWords.some(word => text.includes(word))) emotion = 'tired';
   
   // 상황 분석
-  let situation = 'general';
+  let situation: SituationType = 'general';
   if (workWords.some(word => text.includes(word))) situation = 'work';
   else if (relationshipWords.some(word => text.includes(word))) situation = 'relationship';
   else if (studyWords.some(word => text.includes(word))) situation = 'study';
