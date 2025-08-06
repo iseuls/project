@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💝 마음이 쉬는 곳 - AI 상담사
 
-## Getting Started
+따뜻하고 공감적인 AI 상담사가 당신의 이야기를 들어드리고, 칭찬과 위로, 그리고 실용적인 조언을 제공합니다.
 
-First, run the development server:
+## ✨ 주요 기능
 
+- **🤖 GPT-4o 모델**: 최신 AI 모델을 사용한 정교한 답변
+- **🔍 실시간 웹 검색**: Google Custom Search API를 통한 최신 정보 제공
+- **💝 세 가지 섹션**: 칭찬, 위로, 해결책으로 구분된 답변
+- **🔗 유용한 링크**: 관련 전문가, 상담소, 도움말 사이트 추천
+- **🎨 아름다운 UI**: 3D 효과와 애니메이션이 적용된 현대적인 디자인
+
+## 🚀 빠른 시작
+
+### 1. 프로젝트 클론
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/iseuls/project.git vibe-coding-2
+cd vibe-coding-2
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 의존성 설치
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. API 키 설정
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### OpenAI API 키
+1. [OpenAI Platform](https://platform.openai.com/api-keys)에서 API 키 발급
+2. `.env.local` 파일에 추가:
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-## Learn More
+#### Google Custom Search API (선택사항)
+웹 검색 기능을 사용하려면:
+1. [Google Cloud Console](https://console.cloud.google.com/)에서 API 키 생성
+2. [Google Programmable Search Engine](https://programmablesearchengine.google.com/)에서 검색 엔진 생성
+3. `.env.local` 파일에 추가:
+```bash
+GOOGLE_SEARCH_API_KEY=your_google_search_api_key_here
+GOOGLE_CUSTOM_SEARCH_ENGINE_ID=your_custom_search_engine_id_here
+```
 
-To learn more about Next.js, take a look at the following resources:
+자세한 설정 방법은 [GOOGLE_SEARCH_SETUP.md](./GOOGLE_SEARCH_SETUP.md)를 참조하세요.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. 개발 서버 실행
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 5. 브라우저에서 접속
+```
+http://localhost:3000
+```
 
-## Deploy on Vercel
+## 🎯 사용 방법
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **이야기 입력**: 텍스트 영역에 당신의 고민이나 일상을 자유롭게 적어주세요
+2. **AI 분석**: GPT-4o가 당신의 이야기를 분석하고 웹 검색을 통해 최신 정보를 수집합니다
+3. **세 가지 답변**: 
+   - **🎉 칭찬**: 당신이 잘하고 있는 것들을 칭찬
+   - **💝 위로**: 따뜻한 공감과 위로
+   - **💡 해결책**: 구체적인 조언과 유용한 링크
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔍 웹 검색 기능
+
+다음 키워드가 포함된 메시지에 대해 자동으로 웹 검색이 수행됩니다:
+
+- **정신건강**: 상담사, 심리상담, 정신건강, 스트레스 관리, 불안증, 우울증
+- **자기계발**: 자기계발, 명상, 요가, 운동, 영양, 수면, 취미활동
+- **상담**: 직업상담, 학업상담, 인간관계, 커뮤니케이션, 감정관리
+
+## 🛠 기술 스택
+
+- **Frontend**: Next.js 15, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **AI**: OpenAI GPT-4o
+- **Search**: Google Custom Search API
+- **Styling**: Custom CSS with 3D effects
+
+## 🔧 문제 해결
+
+### API 할당량 초과
+- OpenAI API 키를 새로 발급받아 `.env.local` 파일을 업데이트
+- 서버 재시작: `npm run dev`
+
+### 웹 검색이 작동하지 않는 경우
+- Google Custom Search API 설정 확인
+- [GOOGLE_SEARCH_SETUP.md](./GOOGLE_SEARCH_SETUP.md) 참조
+
+자세한 문제 해결 방법은 [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)를 참조하세요.
+
+## 📝 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+
+## 🤝 기여
+
+버그 리포트나 기능 제안은 언제든 환영합니다!
+
+---
+
+💝 **모든 이야기는 소중하고, 당신은 혼자가 아닙니다.** 💝
